@@ -21,7 +21,7 @@ test('mock: top and full lists, real count, filter, selection and five-minute cl
   await page.goto('/sports')
   const full = page.getByRole('region', { name: '전체 라이브 목록' })
   await expect(full.locator('.sports-card')).toHaveCount(2)
-  await expect(page.getByRole('region', { name: '인기 TOP 5' }).locator('.sports-card')).toHaveCount(2)
+  await expect(page.getByRole('region', { name: '인기 TOP 5' }).locator('.sports-card')).toHaveCount(1)
   await full.locator('.sports-select').nth(1).click()
   await expect(page.getByRole('region', { name: '선택한 방송' }).getByRole('heading')).toHaveText(items[1].title)
   await expect(page.getByRole('region', { name: '선택한 방송' })).toContainText('동시 시청자 수 비공개')
@@ -79,4 +79,9 @@ test('mock: feed automatically refreshes after five minutes', async ({ page }) =
   expect(calls).toBe(1)
   await page.clock.fastForward(300001)
   await expect.poll(() => calls).toBe(2)
+})
+test('missing Firebase config: existing login reports configuration failure instead of crashing', async ({ page }) => {
+  await page.goto('/login')
+  await page.getByRole('button', { name: '구글 로그인' }).click()
+  await expect(page.getByRole('alert')).toContainText('Firebase 로그인 설정이 없습니다')
 })

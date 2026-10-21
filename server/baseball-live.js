@@ -49,7 +49,11 @@ export function createLiveService({ fetcher = fetch, now = Date.now, getKey = ()
     const old = cache.get(key)
     if (old && now() - old.time < ttl) return old.value
     if (pending.has(key)) return pending.get(key)
-    const work = run().then(value => { cache.set(key, { time: now(), value }); return value })
+    const work = run().then(value => {
+      cache.set(key, { time: now(), value })
+      if (cache.size > 512) cache.delete(cache.keys().next().value)
+      return value
+    })
       .finally(() => pending.delete(key))
     pending.set(key, work)
     return work
@@ -88,7 +92,7 @@ export function createLiveService({ fetcher = fetch, now = Date.now, getKey = ()
         }
       }))
       const items = rankVideos(videos)
-      return { items, top: items.slice(0, 5), fetchedAt: new Date(now()).toISOString(), expiresAt: new Date(now() + CACHE_MS).toISOString(), truncated, scope }
+      return { items, top: items.filter(item => item.viewers !== null).slice(0, 5), fetchedAt: new Date(now()).toISOString(), expiresAt: new Date(now() + CACHE_MS).toISOString(), truncated, scope }
     })
   }
   async function check(id) {
