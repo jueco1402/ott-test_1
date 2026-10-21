@@ -1,0 +1,17 @@
+// Merge inside the existing match /databases/{database}/documents block.
+// Do not replace existing rules. Review overlapping allow rules before deploying.
+match /sportsRooms/{videoId}/messages/{messageId} {
+  allow read: if request.auth != null && videoId.matches('^[A-Za-z0-9_-]{11}$');
+  allow create: if request.auth != null
+    && videoId.matches('^[A-Za-z0-9_-]{11}$')
+    && request.resource.data.keys().hasAll(['uid', 'name', 'text', 'createdAt'])
+    && request.resource.data.keys().hasOnly(['uid', 'name', 'text', 'createdAt'])
+    && request.resource.data.uid == request.auth.uid
+    && request.resource.data.name is string
+    && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 40
+    && request.resource.data.text is string
+    && request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 300
+    && request.resource.data.text.matches('.*[^\\s].*')
+    && request.resource.data.createdAt == request.time;
+  allow update, delete: if false;
+}

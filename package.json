@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test tests/baseball-live.test.js",
+    "test:rules": "firebase emulators:exec --project demo-sports --config tests/firebase.json --only firestore \"node --test tests/sports-rules.test.js\"",
+    "test:ui": "playwright test",
+    "lint:sports": "eslint src/pages/Sports.jsx src/sports server api tests/*.js playwright.config.js"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
@@ -22,6 +26,8 @@
   "devDependencies": {
     "@babel/core": "^7.29.7",
     "@eslint/js": "^10.0.1",
+    "@firebase/rules-unit-testing": "^6.0.0",
+    "@playwright/test": "^1.64.1",
     "@rolldown/plugin-babel": "^0.2.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
@@ -30,6 +36,7 @@
     "eslint": "^10.10.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.6",
+    "firebase-tools": "^15.34.0",
     "globals": "^17.12.0",
     "vite": "^8.3.0"
   }
