@@ -3,3 +3,4 @@
   margin: 0 auto;
   
 }
+.app-header .inner{padding-left:20px;padding-right:20px}.app-header .header-left>ul{white-space:nowrap}.app-header .header-right{white-space:nowrap}@media(max-width:1000px){.app-header .inner{flex-wrap:wrap;gap:12px}.app-header .header-left{width:100%;flex-wrap:wrap;gap:12px}.app-header .header-left h1 img{width:110px}.app-header .header-left>ul{width:100%;overflow-x:auto;gap:18px;padding-bottom:4px;flex-shrink:0}.app-header .header-left>ul li{flex-shrink:0}.app-header .header-right{margin-left:auto;font-size:13px}.app-header{padding-top:12px;padding-bottom:12px}}

@@ -9,6 +9,7 @@ const mainMenu = [
   { id: 3, menu: "NEW 요즘 대세 콘텐츠", path: "/new" },
   { id: 4, menu: "애니메이션", path: "/animate" },
   { id: 5, menu: "찜리스트", path: "/heart" },
+  { id: 6, menu: "스포츠", path: "/sports" },
 ]
 const familys = ["아빠", "엄마", "아들", "딸"];
 export const Header = () => {
@@ -35,7 +36,7 @@ export const Header = () => {
   const isHome = location.pathname === "/";
   console.log(isHome);
   return (
-    <header className={`fixed z-10000 w-full py-5 
+    <header className={`app-header fixed top-0 left-0 z-10000 w-full py-5
     ${isHome ? "bg-transparent" : "bg-green-500"}`}>
       <div className="inner flex justify-between items-center">
         <div className="header-left flex gap-10 items-center">
@@ -66,7 +67,7 @@ export const Header = () => {
               </div>
               )}
               </li>
-              
+
             </>
             ) : (
               <>
